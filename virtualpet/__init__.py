@@ -6,11 +6,11 @@ from flask import Flask
 
 # application factory function
 def create_app(test_config=None):
-    # Create and cofigure the app
+    # Create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
+        DATABASE=os.path.join(app.instance_path, 'virtualpet.sqlite'),
     )
 
     if test_config is None:
@@ -34,6 +34,13 @@ def create_app(test_config=None):
 
     from . import db
     db.init_app(app)
+
+    from . import auth
+    app.register_blueprint(auth.bp)
+
+    from . import pet
+    app.register_blueprint(pet.bp)
+    app.add_url_rule('/', endpoint='index')
 
     return app
 

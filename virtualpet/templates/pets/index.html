@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}My Pets{% endblock %}
+
+{% block content %}
+  <h1>My Pets</h1>
+
+  {% if pets %}
+    <ul class="pet-list">
+      {% for pet in pets %}
+        <li class="pet-item">
+          <strong>{{ pet['name'] }} the {{ pet['type'] }}</strong>
+          <p>Hunger: {{ pet['hungerLevel'] }}</p>
+          <p>Happiness: {{ pet['happinessLevel'] }}</p>
+          <p>Energy: {{ pet['energyLevel'] }}</p>
+          <p>Status: {{ pet['status'] }}</p>
+          <p>Last Interaction: {{ pet['lastInteraction'] }} </p>
+
+          <form action="{{ url_for('pet.action', pet_id=pet['id']) }}" method="post">
+            <button type="submit" name="action_type" value="feed">Feed</button>
+            <button type="submit" name="action_type" value="play">Play</button>
+          </form>
+          <form action="{{ url_for('pet.nap', pet_id=pet['id']) }}" method="post">
+            <button type="submit">Nap to restore energy</button>
+          </form>
+          <div class="update">
+              <h4>Update Pet</h4>
+              <form action="{{ url_for('pet.updatePet', pet_id=pet['id']) }}" method="post">
+                <input type="text" name="new_name" placeholder="New Name" required>
+                <button type="submit" name="action_type" value="change_name">Change Name</button>
+              </form>
+              <form action="{{ url_for('pet.delete_pet', pet_id=pet['id']) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this pet?');">
+                <button type="submit">Delete Pet</button>
+              </form>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No pets currently. <a href="{{ url_for('pet.adopt') }}">Adopt one now!</a></p>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Virtual Pet Game{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <ul>
+            {% if g.user %}
+                <li><a href="{{ url_for('pet.index') }}">My Pets</a></li>
+                <li><a href="{{ url_for('pet.adopt') }}">Adopt A New Pet</a></li>
+                <li><span>{{ g.user['username'] }} </span></li>
+
+                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <!-- Flash Messages -->
+    <section class="content">
+        <header>
+            {% block header %}{% endblock %}
+        </header>
+        <div class="flash-messages">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+    </section>
+
+
+<!--  Main Content Area -->
+    <main class="content">
+        {% block content %}{% endblock %}
+    </main>
+
+<!-- Footer -->
+    <footer>
+
+    </footer>
+
+</body>
+</html>

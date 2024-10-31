@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Adopt a Pet{% endblock %}
+
+{% block content %}
+  <h1>Adopt a Pet</h1>
+  <form action="{{ url_for('pet.adopt') }}" method="post">
+    <label for="name">Pet Name:</label>
+    <input type="text" name="name" id="name" required>
+
+    <h2>Choose your pet:</h2>
+    <div>
+      <input type="radio" id="dog" name="type" value="dog" required>
+      <label for="dog">Dog</label>
+    </div>
+    <div>
+      <input type="radio" id="cat" name="type" value="cat">
+      <label for="cat">Cat</label>
+    </div>
+
+    <button type="submit">Adopt!</button>
+  </form>
+{% endblock %}

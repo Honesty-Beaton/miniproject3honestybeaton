@@ -16,6 +16,7 @@ CREATE TABLE pet(
   hungerLevel INTEGER DEFAULT 50,
   happinessLevel INTEGER DEFAULT 50,
   energyLevel INTEGER DEFAULT 50,
+  status TEXT DEFAULT 'Average',
   lastInteraction TIMESTAMP  DEFAULT CURRENT_TIMESTAMP,
   userID INTEGER NOT NULL,
   FOREIGN KEY (userID) REFERENCES user(id)
